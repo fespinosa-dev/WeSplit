@@ -34,13 +34,17 @@ struct ContentView: View {
         return checkAmount + tipValue;
     }
     
+    var currencyFormatter: FloatingPointFormatStyle<Double>.Currency{
+        return .currency(code: Locale.current.currencyCode ?? "USD")
+    }
+    
     let tipPercentages = [10, 15, 20, 25, 0]
     
     var body: some View {
         NavigationView{
             Form{
                 Section{
-                    TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD") )
+                    TextField("Amount", value: $checkAmount, format: currencyFormatter)
                         .keyboardType(.decimalPad)
                         .focused($amountIsFocused)
                     
@@ -61,14 +65,12 @@ struct ContentView: View {
                     Text("How much tip do you want to leave?")
                 }
                 Section {
-                    Text(totalPerPerson, format: .currency(code:
-                                                            Locale.current.currencyCode ?? "USD"))
+                    Text(totalPerPerson, format: currencyFormatter)
                 } header: {
                     Text("Amount per person")
                 }
                 Section {
-                    Text(totalAmount, format: .currency(code:
-                                                            Locale.current.currencyCode ?? "USD"))
+                    Text(totalAmount, format: currencyFormatter)
                 }header: {
                     Text("Total amount")
                 }
